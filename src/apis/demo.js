@@ -3,7 +3,7 @@ import service from '@/network/requestProject'
 export default {
   get(params) {
     return service({
-      url: '/sendToBeebot',
+      url: '/api/sendToBeebot',
       method: 'get',
       params,
     })

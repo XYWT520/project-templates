@@ -1,37 +1,120 @@
 <template>
   <div class='testFile'>
     <a-button style="margin:10px 10px" type="primary" @click="onClickSendResquest"
-      :loading="loadingStatus['sendToBeebot:create']">send equest</a-button>
-    <el-button style="margin:10px 10px" type="primary" @click="onClickAdd">test Add</el-button>
-    <el-button style="margin:10px 10px" type="primary" @click="onClickDemoGet">test demo-get</el-button>
+      :loading="loadingStatus['sendToBeebot:create']">get请求</a-button>
+    <el-button style="margin:10px 10px" type="primary" @click="onClickLoad">刷新</el-button>
+    <label for="">添加数据: </label>
+    <el-input style="width: 240px" v-model="inputValue"></el-input>
+    <el-button style="margin:10px 10px" type="primary" @click="onClickAdd">添加数据</el-button>
+    <ul>
+      <li id="li" class="li" v-for="({ name, age, id }) in list" :key="id">{{ age }}{{ name }}</li>
+    </ul>
+
+    <div style="width: 50vw;">
+      <el-table :data="list" align="center" border :loading="loading">
+        <el-table-column label="id" prop="id"></el-table-column>
+        <el-table-column label="姓名" prop="name"></el-table-column>
+        <el-table-column label="年龄" prop="age"></el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
 <script>
+import { tranListToTreeData } from '@/utils/stringUtil'
+
+let arr = [
+  { id: "01", pid: "", name: "老王" },
+  { id: "02", pid: "01", name: "小张" }
+]
+
+// let treeList = []
+// let map = {}
+
+// arr.forEach((item) => {
+//   if (!item.children) {
+//     item.children = []
+//   }
+//   map[item.id] = item
+// })
+
+// arr.forEach(item => {
+//   // console.log(item);
+//   const children = map[item.pid]
+//   console.log(children);
+//   if (children) {
+//     children.children.push(item)
+//   } else {
+//     treeList.push(item)
+//   }
+// })
+// console.log(treeList);
+
+const res = tranListToTreeData(arr)
+console.log(res);
+
+// const result = jsonToTree(arr, {
+//   id: 'id',
+//   pid: 'pid',
+//   children: 'children'
+
+// })
+// console.log(result);
+
+
 export default {
+
   name: 'testFile',
   components: {},
-  data() {
+  data () {
     return {
-
+      inputValue: '',
+      loading: false,
+      list: [],
     };
   },
 
-  created() {
-    // console.log(this.$route);
+  created () {
+    // this.onClickSendResquest()
+  },
+
+  mounted () {
+
   },
 
   methods: {
-    onClickSendResquest() {
-      this.$apis.sendToBeebot().then(() => { }).catch(() => { console.log('执行失败') }).finally(() => { console.log('执行') })
+    onClickSendResquest () {
+      window.document.title = '冷雪瞳'
+      this.loading = true
+      this.$apis.getList().then((res) => {
+        this.loading = false
+        if (res) {
+          this.list = res
+          this.$message.success('请求成功')
+        } else {
+          this.$message.error('请求失败')
+        }
+      })
+        .catch(() => { console.log('执行失败') })
+        .finally(() => { console.log('执行') })
     },
 
-    onClickAdd() {
-      this.$apis.add()
+    onClickAdd () {
+      const data = {
+        id: 4,
+        name: this.inputValue
+      }
+      this.$apis.addList(data).then(res => {
+        console.log(res);
+      })
     },
 
-    onClickDemoGet() {
-      console.log(this);
+    onClickLoad () {
+      // this.$apis.add()
+      location.reload()
+    },
+
+    onClickDemoGet () {
       this.$apis.demo.get({ id: 1 })
     },
   },

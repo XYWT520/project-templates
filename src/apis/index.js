@@ -20,22 +20,30 @@ import demo from './demo'
 // }
 
 export default {
-  add(data) {
+  add (data) {
     return service({
-      url: '/sendToBeebot',
+      url: '/api/sendToBeebot',
       method: 'post',
       data,
     });
   },
 
-  sendToBeebot(params) {
+  getList (params) {
     return service({
-      url: '/sendToBeebot',
+      url: '/api/getList',
       method: 'get',
       params,
       headers: {
         loadingTag: 'sendToBeebot:create',
       },
+    });
+  },
+
+  addList (data) {
+    return service({
+      url: '/api/addList',
+      method: 'post',
+      data
     });
   },
 

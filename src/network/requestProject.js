@@ -2,8 +2,8 @@ import axios from 'axios';
 import { inject } from './injectIntercepter';
 
 const service = axios.create({
-  baseURL: 'http://192.168.92.60', // api的base_url
-  // baseURL: '/api', // api的base_url
+  // baseURL: 'http://localhost:9999', 
+  // baseURL: 'http://localhost:8080', 
   timeout: 20000, // 请求超时时间
 });
 
