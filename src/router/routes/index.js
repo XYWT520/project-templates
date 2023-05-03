@@ -18,5 +18,13 @@ export default [
       name:'测试文件'
     },
     component: () => import('../../views/testFile/testFile.vue')
+  },
+  {
+    path: '/styleDemo',
+    name: 'styleDemo',
+    meta:{
+      name:'测试文件'
+    },
+    component: () => import('../../views/styleDemo/styleDemo.vue')
   }
 ]

@@ -21,37 +21,42 @@
 </template>
 
 <script>
-import { tranListToTreeData } from '@/utils/stringUtil'
+// import { jsonToTree } from '@/utils/stringUtil'
 
 let arr = [
-  { id: "01", pid: "", name: "老王" },
-  { id: "02", pid: "01", name: "小张" }
+  { id: 0, pid: null, name: '生物' },
+  { id: 1, pid: 0, name: '动物' },
+  { id: 2, pid: 0, name: '植物' },
+  { id: 3, pid: 0, name: '微生物' },
+  { id: 4, pid: 1, name: '哺乳动物' },
+  { id: 5, pid: 1, name: '卵生动物' },
+  { id: 6, pid: 2, name: '种子植物' },
+  { id: 7, pid: 2, name: '蕨类植物' },
+  { id: 8, pid: 4, name: '大象' },
+  { id: 9, pid: 4, name: '海豚' },
+  { id: 10, pid: 4, name: '猩猩' },
+  { id: 11, pid: 5, name: '蟒蛇' },
+  { id: 12, pid: 5, name: '麻雀' }
 ]
 
-// let treeList = []
-// let map = {}
+let treeList = []
+let map = {}
+arr.forEach((item) => {
+  item && (map[item.id] = item)
+})
+console.log(map);
 
-// arr.forEach((item) => {
-//   if (!item.children) {
-//     item.children = []
-//   }
-//   map[item.id] = item
-// })
+arr.forEach(item => {
+  const parent = map[item.pid]
+  if (parent) {
+    !parent.children && (parent.children = [])
+    parent.children.push(item)
+  } else {
+    treeList.push(item)
+  }
+})
+console.log(treeList);
 
-// arr.forEach(item => {
-//   // console.log(item);
-//   const children = map[item.pid]
-//   console.log(children);
-//   if (children) {
-//     children.children.push(item)
-//   } else {
-//     treeList.push(item)
-//   }
-// })
-// console.log(treeList);
-
-const res = tranListToTreeData(arr)
-console.log(res);
 
 // const result = jsonToTree(arr, {
 //   id: 'id',

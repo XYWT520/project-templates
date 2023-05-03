@@ -3,6 +3,7 @@
     <div class="flex">
       <router-link to="/home" class="home">主页</router-link>
       <router-link to="/testFile" class="test-file">测试文件</router-link>
+      <router-link to="/styleDemo" class="test-file">css</router-link>
     </div>
     <router-view></router-view>
   </div>
